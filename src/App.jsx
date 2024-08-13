@@ -38,9 +38,11 @@ function App() {
           <ScoreBoard score={score} streak={streak} />
         </div>
         <div className="containerCards">
-          {pokemon.map((poke) => (
-            <Card key={poke.name} name={poke.name} url={poke.url} />
-          ))}
+          <div className="cards">
+            {pokemon.map((pokemon, index) => (
+              <Card key={index} name={pokemon.name} url={pokemon.url} />
+            ))}
+          </div>
         </div>
       </div>
     </>

@@ -1,4 +1,6 @@
 import React from "react";
+import "../utils/Card.css";
+import Tilt from "react-parallax-tilt";
 
 function Card({ name, url }) {
   // teilt an jeden "/", filter boolean => filtert leere Strings, pop= letztes Element
@@ -6,33 +8,39 @@ function Card({ name, url }) {
   // funktionierende ImageUrl mit der entsprechenden ID
   const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
 
+  // Pfad zur Rückseite der Karte (public-Ordner)
+  const cardBackImage = "/card-back.png";
+
   return (
-    <div className="cards">
-      <button>
-        <div
-          className="singleCard"
-          style={{
-            width: "160px",
-            height: "200px",
-            backgroundColor: "white",
-            margin: "5px",
-            borderRadius: "10px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-          }}
-        >
-          <img
-            src={imageUrl}
-            alt={name}
-            style={{ width: "100%", height: "auto", borderRadius: "10px" }}
-          />
-          <p style={{ marginTop: "0px", textAlign: "center" }}>{name}</p>
+    <Tilt
+      tiltReverse /*Richtung des Kippeffekt*/
+      reset /* Setzt auf ursprüngliche Perspektive*/
+      glareEnable={true} /*Glanz*/
+      glareMaxOpacity={0.4} /*Glanzsichtbarkeit*/
+      glareColor="#fff"
+      glarePosition="all" /*Position des Glanz, all = gleichmäßig*/
+      className="card-container"
+    >
+      <div className="card-inner">
+        {/* Vorderseite der Karte */}
+        <div className="card-front">
+          <button className="card">
+            <img
+              src={imageUrl}
+              alt={name}
+              className="card-image"
+              draggable="false"
+            />
+            <p className="card-name">{name}</p>
+          </button>
         </div>
-      </button>
-    </div>
+
+        {/* Rückseite der Karte */}
+        <div className="card-back">
+          <img src={cardBackImage} alt="pokemon card back" className="back" />
+        </div>
+      </div>
+    </Tilt>
   );
 }
 
