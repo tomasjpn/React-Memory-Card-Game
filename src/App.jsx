@@ -26,8 +26,9 @@ function App() {
     return () => fetchPokemon();
   }, []);
 
+  //Ladeanzeige, bis die Daten aufgerufen sind
   if (loading) {
-    return <div>Loading...</div>; //Ladeanzeige, bis die Daten aufgerufen sind
+    return <div>Loading...</div>;
   }
 
   return (
@@ -37,7 +38,9 @@ function App() {
           <ScoreBoard score={score} streak={streak} />
         </div>
         <div className="containerCards">
-          <Card />
+          {pokemon.map((poke) => (
+            <Card key={poke.name} name={poke.name} url={poke.url} />
+          ))}
         </div>
       </div>
     </>
