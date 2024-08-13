@@ -2,7 +2,7 @@ import React from "react";
 import "../utils/Card.css";
 import Tilt from "react-parallax-tilt";
 
-function Card({ name, url }) {
+function Card({ name, url, onClick }) {
   // teilt an jeden "/", filter boolean => filtert leere Strings, pop= letztes Element
   const pokemonId = url.split("/").filter(Boolean).pop();
   // funktionierende ImageUrl mit der entsprechenden ID
@@ -24,7 +24,7 @@ function Card({ name, url }) {
       <div className="card-inner">
         {/* Vorderseite der Karte */}
         <div className="card-front">
-          <button className="card">
+          <button className="card" onClick={onClick}>
             <img
               src={imageUrl}
               alt={name}

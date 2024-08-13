@@ -3,6 +3,7 @@ import "./App.css";
 import Card from "./components/Card";
 import ScoreBoard from "./components/ScoreBoard";
 import { fetchPokemonList } from "./utils/pokemonAPI";
+import ShuffleCards from "./utils/Shufflecards";
 
 function App() {
   // States für den Spielstand
@@ -16,6 +17,26 @@ function App() {
   // State für den Spielstart
   const [gameStarted, setGameStarted] = useState(false);
 
+  // State für das Speichern der bereits ausgewählten Karten
+  const [trackPokemon, setTrackPokemon] = useState([]);
+
+  // Funktion um die ausgewählten Karten zu speichern
+  function handleSelectedCard(selectedPokemonName) {
+    // Wenn im State trackPokemon das ausgehwählte Pokemon vorhanden ist
+    if (trackPokemon.includes(selectedPokemonName)) {
+      // Wenn das letzte Score höher ist als die aktuelle Streak, dann wird akteulle Streak aktualisiert
+      if (score > streak) {
+        setStreak(score);
+      }
+      setScore(0); // Score wird zurückgesetzt
+      setTrackPokemon([]); // Das Array zum Tracken der Pokemons wird zurückgesetzt
+      setGameStarted(false); // Spiel starten Button taucht auf
+      return;
+    }
+    setTrackPokemon((prev) => [...prev, selectedPokemonName]); // vorheriges Array + das neue Pokemon
+    setScore(score + 1); // Score wird jedes Mal erhöht
+  }
+
   // Funktion um das Spiel zu starten
   function startGame() {
     setGameStarted(true);
@@ -26,7 +47,8 @@ function App() {
     async function fetchPokemon() {
       try {
         const pokemonData = await fetchPokemonList(10); // Liste mit 10 Elementen
-        setPokemon(pokemonData); // Die abgerufenen Daten werden in den State gespeichert
+        const shuffledCards = ShuffleCards(pokemonData);
+        setPokemon(shuffledCards); // Die abgerufenen Daten werden in den State gespeichert
         setLoading(false); // Das Laden wird beendet
       } catch (error) {
         console.log("Fehler beim Abrugen der Pokemon Daten: ", error);
@@ -58,8 +80,13 @@ function App() {
           </div>
           <div className="containerCards">
             <div className="cards">
-              {pokemon.map((pokemon, index) => (
-                <Card key={index} name={pokemon.name} url={pokemon.url} />
+              {pokemon.map((pokemon) => (
+                <Card
+                  key={pokemon.name}
+                  name={pokemon.name}
+                  url={pokemon.url}
+                  onClick={() => handleSelectedCard(pokemon.name)}
+                />
               ))}
             </div>
           </div>
