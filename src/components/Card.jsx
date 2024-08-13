@@ -8,27 +8,30 @@ function Card({ name, url }) {
 
   return (
     <div className="cards">
-      <div
-        className="singleCard"
-        style={{
-          width: "160px",
-          height: "200px",
-          backgroundColor: "white",
-          margin: "5px",
-          borderRadius: "10px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <img
-          src={imageUrl}
-          alt={name}
-          style={{ width: "100%", height: "auto", borderRadius: "10px" }}
-        />
-      </div>
-      <br></br>
-      <p>{name}</p>
+      <button>
+        <div
+          className="singleCard"
+          style={{
+            width: "160px",
+            height: "200px",
+            backgroundColor: "white",
+            margin: "5px",
+            borderRadius: "10px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+          }}
+        >
+          <img
+            src={imageUrl}
+            alt={name}
+            style={{ width: "100%", height: "auto", borderRadius: "10px" }}
+          />
+          <p style={{ marginTop: "0px", textAlign: "center" }}>{name}</p>
+        </div>
+      </button>
     </div>
   );
 }
