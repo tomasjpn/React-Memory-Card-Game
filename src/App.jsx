@@ -20,6 +20,9 @@ function App() {
   // State für das Speichern der bereits ausgewählten Karten
   const [trackPokemon, setTrackPokemon] = useState([]);
 
+  // State für das Speichern der umgedrehten Karten
+  const [flippedCards, setFlippedCards] = useState([]);
+
   // Funktion um die ausgewählten Karten zu speichern
   function handleSelectedCard(selectedPokemonName) {
     // Wenn im State trackPokemon das ausgehwählte Pokemon vorhanden ist
@@ -35,6 +38,8 @@ function App() {
     }
     setTrackPokemon((prev) => [...prev, selectedPokemonName]); // vorheriges Array + das neue Pokemon
     setScore(score + 1); // Score wird jedes Mal erhöht
+    const shuffledCards = ShuffleCards(pokemon);
+    setPokemon(shuffledCards);
   }
 
   // Funktion um das Spiel zu starten

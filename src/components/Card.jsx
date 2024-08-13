@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "../utils/Card.css";
 import Tilt from "react-parallax-tilt";
 
 function Card({ name, url, onClick }) {
+  const [flipped, setFlipped] = useState(false);
   // teilt an jeden "/", filter boolean => filtert leere Strings, pop= letztes Element
   const pokemonId = url.split("/").filter(Boolean).pop();
   // funktionierende ImageUrl mit der entsprechenden ID
@@ -10,6 +11,11 @@ function Card({ name, url, onClick }) {
 
   // Pfad zur Rückseite der Karte (public-Ordner)
   const cardBackImage = "/card-back.png";
+
+  const handleClick = () => {
+    setFlipped(!flipped); // Karte umdrehen
+    onClick(); // Callback für die Handhabung der Kartenauswahl
+  };
 
   return (
     <Tilt
