@@ -5,10 +5,21 @@ import ScoreBoard from "./components/ScoreBoard";
 import { fetchPokemonList } from "./utils/pokemonAPI";
 
 function App() {
+  // States für den Spielstand
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
+
+  // States für die Pokemons
   const [pokemon, setPokemon] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // State für den Spielstart
+  const [gameStarted, setGameStarted] = useState(false);
+
+  // Funktion um das Spiel zu starten
+  function startGame() {
+    setGameStarted(true);
+  }
 
   // Daten aus der API aufzurufen
   useEffect(() => {
@@ -32,20 +43,29 @@ function App() {
   }
 
   return (
-    <>
-      <div className="gameBoard">
-        <div className="containerScoreBoard">
-          <ScoreBoard score={score} streak={streak} />
+    <div className="app-container">
+      {!gameStarted && (
+        <div className="start-screen">
+          <button className="start-btn" onClick={startGame}>
+            Spiel starten
+          </button>
         </div>
-        <div className="containerCards">
-          <div className="cards">
-            {pokemon.map((pokemon, index) => (
-              <Card key={index} name={pokemon.name} url={pokemon.url} />
-            ))}
+      )}
+      {gameStarted && (
+        <div className="gameBoard">
+          <div className="containerScoreBoard">
+            <ScoreBoard score={score} streak={streak} />
+          </div>
+          <div className="containerCards">
+            <div className="cards">
+              {pokemon.map((pokemon, index) => (
+                <Card key={index} name={pokemon.name} url={pokemon.url} />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 }
 

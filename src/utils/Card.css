@@ -19,6 +19,7 @@
   transition: transform 0.6s;
   transform-style: preserve-3d;
   cursor: pointer;
+  margin-bottom: 10px;
 }
 
 .card-front,
