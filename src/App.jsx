@@ -4,6 +4,7 @@ import Card from "./components/Card";
 import ScoreBoard from "./components/ScoreBoard";
 import { fetchPokemonList } from "./utils/pokemonAPI";
 import ShuffleCards from "./utils/Shufflecards";
+import "./utils/Background.css";
 
 function App() {
   // States für den Spielstand
@@ -26,8 +27,11 @@ function App() {
   // State für das Schwierigkeitsniveau
   const [difficulty, setDifficulty] = useState(null);
 
-  // State um zu bestimmen, ob die Schwierigkeit gesetzt wurde
+  // State für das Bestimmen, ob die Schwierigkeit gesetzt wurde
   const [difficultyTrue, setDifficultyTrue] = useState(false);
+
+  // State für Game Over Toggle
+  const [gameOver, setGameOver] = useState(false);
 
   // Funktion um die ausgewählten Karten zu speichern
   function handleSelectedCard(selectedPokemonName) {
@@ -39,8 +43,10 @@ function App() {
       }
       setScore(0); // Score wird zurückgesetzt
       setTrackPokemon([]); // Alle Karten zurückdrehen
+      setGameOver(true); // Game Over Screen
       setGameStarted(false); // Spiel starten Button taucht auf
-      return;
+      setDifficultyTrue(false);
+      setDifficulty(null);
     }
 
     // Karten für 500ms umdrehen, bevor das Array aktualisiert wird -> Ansonsten ungleichmäßige Animation
@@ -63,6 +69,10 @@ function App() {
   // Funktion um das Spiel zu starten
   function startGame() {
     setGameStarted(true);
+    setGameOver(false);
+    setDifficultyTrue(false);
+    setTrackPokemon([]);
+    setScore(0);
   }
 
   function handleDifficulty(difficultyLevel) {
@@ -110,17 +120,32 @@ function App() {
 
   return (
     <div className="app-container">
+      <div class="background-container">
+        <div class="background"></div>
+      </div>
       {/* Wenn Spiel gestartet = false -> Wird der Button angezeigt*/}
-      {!gameStarted && (
+      {!gameStarted && !gameOver && (
         <div className="start-screen">
+          <h1>MEMORY CARD GAME</h1>
           <button className="start-btn" onClick={startGame}>
             Spiel starten
+          </button>
+        </div>
+      )}
+      {/* Wenn das Spiel vorbei ist, wird der Game Over Bildschirm angezeigt */}
+      {gameOver && (
+        <div className="game-over-screen">
+          <h1>GAME OVER!</h1>
+          <p>Karte wurde bereits ausgewählt</p>
+          <button className="retry-btn" onClick={startGame}>
+            Nochmal spielen
           </button>
         </div>
       )}
       {/* Wenn Spiel gestartet = true, aber difficulty = false -> Werden die Buttons für die Schwierigkeiten angezeigt*/}
       {gameStarted && !difficultyTrue && (
         <div className="select-difficulty">
+          <h1>Schwierigkeitsgrad auswählen</h1>
           <button
             className="easyBtn"
             onClick={() => handleDifficulty("Einfach")}
@@ -139,7 +164,7 @@ function App() {
         </div>
       )}
       {/* Wenn die difficulty = True -> Werden die Karten angezeigt*/}
-      {difficultyTrue && (
+      {difficultyTrue && !gameOver && (
         <div className="gameBoard">
           <div className="containerScoreBoard">
             <ScoreBoard score={score} streak={streak} />

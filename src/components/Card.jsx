@@ -24,6 +24,7 @@ function Card({ name, url, onClick, flipped }) {
       glareColor="#fff"
       glarePosition="all" /*Position des Glanz, all = gleichmäßig*/
       className="card-container"
+      scale={1.1}
     >
       <div
         className={`card-inner ${flipped ? "" : "flipped"}`}

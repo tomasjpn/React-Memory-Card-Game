@@ -10,6 +10,8 @@
   perspective: 1000px;
   width: 160px;
   box-sizing: border-box;
+  width: 160px; /* Gleiche Breite wie die Karte */
+  height: 200px;
 }
 
 .card-inner {
@@ -20,6 +22,7 @@
   transform-style: preserve-3d;
   cursor: pointer;
   margin-bottom: 10px;
+  z-index: 1;
 }
 
 .card-inner.flipped {
@@ -36,16 +39,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  outline: none;
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.075);
+  border-radius: 20px;
 }
 
 .card-front {
   background-color: rgba(233, 233, 233, 0.315);
   display: flex;
   flex-direction: column;
+  border: 2px solid transparent;
+}
+
+.card-front:hover {
+  border-color: #ff9d64;
 }
 
 .card-back {
-  background-color: #f9f9f9;
+  background-color: rgba(233, 233, 233, 0.315);
   transform: rotateY(180deg);
   background-size: cover;
 }
@@ -53,7 +64,7 @@
 .card-image {
   width: 100%;
   height: auto;
-  border-radius: 10px;
+  border-radius: 20px;
 }
 
 .card-name {

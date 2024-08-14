@@ -2,8 +2,12 @@
 function ScoreBoard({ score, streak }) {
   return (
     <div className="scoreBoard">
-      <p>Score: {score}</p>
-      <p>Score Streak: {streak}</p>
+      <p id="scoreTxt">
+        Score: <span>{score}</span>
+      </p>
+      <p id="streakTxt">
+        Score Streak: <span>{streak}</span>
+      </p>
     </div>
   );
 }

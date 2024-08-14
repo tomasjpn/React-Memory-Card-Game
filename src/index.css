@@ -4,8 +4,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(0, 0, 0, 0.87);
-  background-color: #ffffff;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #a5dbff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -42,17 +42,19 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #f7f7f7;
-  color: black;
+  background-color: #52525242;
+  color: rgb(255, 255, 255);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #ff6464;
+  background-color: rgba(0, 0, 0, 0.267);
+  border-color: #ff9d64;
+  border-width: 2px;
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: none;
 }
 
 @media (prefers-color-scheme: light) {

@@ -19,10 +19,69 @@
   align-items: right;
 }
 
+.scoreBoard p {
+  font-weight: bold;
+  margin: 0;
+}
+
+.scoreBoard p span {
+  color: rgb(255, 166, 0);
+}
+
+.scoreBoard {
+  background-color: rgba(240, 248, 255, 0.233);
+  border-radius: 30px;
+  padding-bottom: 10px;
+  margin: 5px 80px;
+  margin-top: 10px;
+  border: 2px solid;
+  border-color: rgba(240, 255, 255, 0.151);
+}
+
+#scoreTxt {
+  padding-top: 10px;
+}
+
 .cards {
   display: flex;
 }
 
 .select-difficulty button {
   margin: 5px;
+}
+
+.start-btn {
+  padding: 20px 60px;
+  border-radius: 25px;
+}
+
+.easyBtn,
+.midBtn,
+.hardBtn {
+  border-radius: 15px;
+}
+
+.gameBoard {
+  background-color: rgba(116, 116, 116, 0.178);
+  border-radius: 30px;
+  box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.089);
+  padding-top: 10px;
+  border: 2px solid;
+  border-color: rgba(240, 255, 255, 0.151);
+}
+
+.start-screen h1 {
+  font-size: 46px;
+}
+
+.select-difficulty h1 {
+  font-size: 24px;
+}
+
+.game-over-screen h1 {
+  margin-bottom: 0px;
+}
+
+.game-over-screen p {
+  margin-top: 0px;
 }
