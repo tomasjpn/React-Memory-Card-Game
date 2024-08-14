@@ -2,7 +2,7 @@
 
 Solution for TheOdinProject: Memory Card: https://www.theodinproject.com/lessons/node-path-react-new-memory-card
 
-## Live-preview:
+## Live-preview: https://react-memory-card-game-tomas.vercel.app/
 
 ---
 
