@@ -21,7 +21,7 @@ function App() {
   const [trackPokemon, setTrackPokemon] = useState([]);
 
   // State für das Speichern der umgedrehten Karten
-  const [flippedCards, setFlippedCards] = useState([]);
+  const [flippedCards, setFlippedCards] = useState(true);
 
   // Funktion um die ausgewählten Karten zu speichern
   function handleSelectedCard(selectedPokemonName) {
@@ -32,14 +32,26 @@ function App() {
         setStreak(score);
       }
       setScore(0); // Score wird zurückgesetzt
-      setTrackPokemon([]); // Das Array zum Tracken der Pokemons wird zurückgesetzt
+      setTrackPokemon([]); // Alle Karten zurückdrehen
       setGameStarted(false); // Spiel starten Button taucht auf
       return;
     }
-    setTrackPokemon((prev) => [...prev, selectedPokemonName]); // vorheriges Array + das neue Pokemon
-    setScore(score + 1); // Score wird jedes Mal erhöht
-    const shuffledCards = ShuffleCards(pokemon);
-    setPokemon(shuffledCards);
+
+    // Karten für 500ms umdrehen, bevor das Array aktualisiert wird -> Ansonsten ungleichmäßige Animation
+    setFlippedCards(false);
+
+    setTimeout(() => {
+      setTrackPokemon((prev) => [...prev, selectedPokemonName]); // vorheriges Array + das neue Pokemon
+      setScore((prevScore) => prevScore + 1); // Score wird jedes Mal erhöht
+
+      // Karten mischen
+      const shuffledCards = ShuffleCards(pokemon);
+      setPokemon(shuffledCards);
+
+      setTimeout(() => {
+        setFlippedCards(true); // Karten nach dem Mischen wieder anzeigen
+      }, 500);
+    }, 500);
   }
 
   // Funktion um das Spiel zu starten
@@ -91,6 +103,7 @@ function App() {
                   name={pokemon.name}
                   url={pokemon.url}
                   onClick={() => handleSelectedCard(pokemon.name)}
+                  flipped={flippedCards}
                 />
               ))}
             </div>
@@ -100,5 +113,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

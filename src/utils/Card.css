@@ -22,21 +22,32 @@
   margin-bottom: 10px;
 }
 
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
 .card-front,
 .card-back {
   position: absolute;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-front {
-  background-color: white;
+  background-color: rgba(233, 233, 233, 0.315);
+  display: flex;
+  flex-direction: column;
 }
 
 .card-back {
   background-color: #f9f9f9;
   transform: rotateY(180deg);
+  background-size: cover;
 }
 
 .card-image {
@@ -48,10 +59,4 @@
 .card-name {
   margin-top: 8px;
   text-align: center;
-}
-
-.back {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
