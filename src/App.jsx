@@ -3,7 +3,7 @@ import "./App.css";
 import Card from "./components/Card";
 import ScoreBoard from "./components/ScoreBoard";
 import { fetchPokemonList } from "./utils/pokemonAPI";
-import ShuffleCards from "./utils/Shufflecards";
+import ShuffleCards from "./utils/ShuffleCards.jsx";
 import "./utils/Background.css";
 
 function App() {
