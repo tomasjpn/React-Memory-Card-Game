@@ -22,3 +22,7 @@
 .cards {
   display: flex;
 }
+
+.select-difficulty button {
+  margin: 5px;
+}

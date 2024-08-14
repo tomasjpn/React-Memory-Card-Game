@@ -12,7 +12,7 @@ function App() {
 
   // States für die Pokemons
   const [pokemon, setPokemon] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // State für den Spielstart
   const [gameStarted, setGameStarted] = useState(false);
@@ -22,6 +22,12 @@ function App() {
 
   // State für das Speichern der umgedrehten Karten
   const [flippedCards, setFlippedCards] = useState(true);
+
+  // State für das Schwierigkeitsniveau
+  const [difficulty, setDifficulty] = useState(null);
+
+  // State um zu bestimmen, ob die Schwierigkeit gesetzt wurde
+  const [difficultyTrue, setDifficultyTrue] = useState(false);
 
   // Funktion um die ausgewählten Karten zu speichern
   function handleSelectedCard(selectedPokemonName) {
@@ -59,22 +65,43 @@ function App() {
     setGameStarted(true);
   }
 
+  function handleDifficulty(difficultyLevel) {
+    setDifficulty(difficultyLevel);
+  }
+
   // Daten aus der API aufzurufen
   useEffect(() => {
     async function fetchPokemon() {
+      if (difficulty === null) return; // Wenn kein Schwierigkeitsgrad ausgewählt worden ist, return
+
       try {
-        const pokemonData = await fetchPokemonList(10); // Liste mit 10 Elementen
+        let numberOfPokemon; // Variable für die Anzahl der Elementen
+        switch (difficulty) {
+          case "Einfach":
+            numberOfPokemon = 10;
+            break;
+          case "Mittel":
+            numberOfPokemon = 15;
+            break;
+          case "Schwer":
+            numberOfPokemon = 25;
+            break;
+          default:
+            numberOfPokemon = 10;
+        }
+        const pokemonData = await fetchPokemonList(numberOfPokemon); // Liste mit 10 Elementen
         const shuffledCards = ShuffleCards(pokemonData);
         setPokemon(shuffledCards); // Die abgerufenen Daten werden in den State gespeichert
         setLoading(false); // Das Laden wird beendet
+        setDifficultyTrue(true);
       } catch (error) {
         console.log("Fehler beim Abrugen der Pokemon Daten: ", error);
         setLoading(false);
       }
     }
 
-    return () => fetchPokemon();
-  }, []);
+    fetchPokemon();
+  }, [difficulty]); // Wird nur ausgelöst, wenn es sich difficulty ändert
 
   //Ladeanzeige, bis die Daten aufgerufen sind
   if (loading) {
@@ -83,6 +110,7 @@ function App() {
 
   return (
     <div className="app-container">
+      {/* Wenn Spiel gestartet = false -> Wird der Button angezeigt*/}
       {!gameStarted && (
         <div className="start-screen">
           <button className="start-btn" onClick={startGame}>
@@ -90,7 +118,28 @@ function App() {
           </button>
         </div>
       )}
-      {gameStarted && (
+      {/* Wenn Spiel gestartet = true, aber difficulty = false -> Werden die Buttons für die Schwierigkeiten angezeigt*/}
+      {gameStarted && !difficultyTrue && (
+        <div className="select-difficulty">
+          <button
+            className="easyBtn"
+            onClick={() => handleDifficulty("Einfach")}
+          >
+            Einfach
+          </button>
+          <button className="midBtn" onClick={() => handleDifficulty("Mittel")}>
+            Mittel
+          </button>
+          <button
+            className="hardBtn"
+            onClick={() => handleDifficulty("Schwer")}
+          >
+            Schwer
+          </button>
+        </div>
+      )}
+      {/* Wenn die difficulty = True -> Werden die Karten angezeigt*/}
+      {difficultyTrue && (
         <div className="gameBoard">
           <div className="containerScoreBoard">
             <ScoreBoard score={score} streak={streak} />

@@ -4,7 +4,7 @@
 const POKEAPI_BASE_URL = "https://pokeapi.co/api/v2";
 
 // Funktion zum Abrufen einer Liste von Pokémon
-export async function fetchPokemonList(limit = 10) {
+export async function fetchPokemonList(limit = 25) {
   try {
     // Sendet eine GET-Anfrage an die API, um eine Liste von Pokémon abzurufen
     const response = await fetch(`${POKEAPI_BASE_URL}/pokemon?limit=${limit}`);
